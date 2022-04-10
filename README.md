@@ -1,3 +1,6 @@
+##### For application overview go to the link given below
+<a href="https://github.com/HarshNarwariya/JWTAuth-Django-API/blob/main/App%20Explanation.md" target="_blank">link</a>
+
 # Authentication API
 
 Endpoints of the user authentication API

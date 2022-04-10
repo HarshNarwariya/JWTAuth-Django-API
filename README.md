@@ -1,6 +1,4 @@
-# JWTAuth-Django-API
-
-## Authentication API
+# Authentication API
 
 Endpoints of the user authentication API
 ```

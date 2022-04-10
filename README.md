@@ -21,7 +21,7 @@ To register user go to register endpoint and pass following params:
 + password2
 
 **code**
-```
+```python
 def register(self, email, name, password, password2, endpoint='register'):
     payload = {
         'email': email,
@@ -52,7 +52,7 @@ To register user go to register endpoint and pass following params:
 + password
 
 **code**
-```
+```python
 def login(self, email, password, endpoint='login'):
     payload = {
         'email': email,
@@ -120,7 +120,7 @@ def changepassword(self, password, password2, token, endpoint='changepassword'):
     return response.json()
 ```
 On success
-```
+```python
 STATUS_CODE = 200
 {
     'success': 'password changed successfully'
@@ -154,7 +154,7 @@ This mail gives uid and token for further use in reseting password.
 To reset password first confirm new password and pass uid and token.
 
 
-```
+```python
 # Example
 uid = 'MTA'
 token = 'b3ot40-3e871b775cebc05c07b24e447a83f7d6'
@@ -171,13 +171,13 @@ def resetpassword(self, password, password2, uid, token, endpoint='resetpassword
 
 ```
 On success password will be changed
-```
+```python
 STATUS_CODE = 200
 ```
 
 # For Api reference consider the following python code
 
-```
+```python
 import requests
 
 class API:

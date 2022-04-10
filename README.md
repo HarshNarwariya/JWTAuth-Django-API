@@ -35,7 +35,7 @@ def register(self, email, name, password, password2, endpoint='register'):
     return response.json()
 ```
 
-On successfull login register endpoint returns access and refresh token for further use
+On successfull registration, register endpoint returns access token and refresh token for further use.
 ```python
 STATUS_CODE = 201
 {
@@ -47,7 +47,7 @@ STATUS_CODE = 201
 
 ### Login
 
-To register user go to register endpoint and pass following params:
+To login user go to login endpoint and pass following params:
 + email
 + password
 
@@ -63,7 +63,7 @@ def login(self, email, password, endpoint='login'):
     self.print_details(response)
     return response.json()
 ```
-On successfull login register endpoint returns access and refresh token for further use
+On successfull login, login endpoint returns access and refresh token for further use.
 ```python
 STATUS_CODE = 200
 {
@@ -74,7 +74,7 @@ STATUS_CODE = 200
 
 ### Profile
 
-To view profile (as it requires authentication), first generate access token via login or register endpoint, and pass it to profile endpoint which uses Bearer AUthentication.
+To view profile, first generate access token via login or register endpoint (as it requires authentication), and pass it to profile endpoint which uses Bearer Authentication.
 
 ```python
 def profile(self, token, endpoint='profile'):
@@ -94,15 +94,14 @@ STATUS_CODE = 200
 {
     'id': 10, 
     'email': 'example@gmail.com', 
-    'name': 
-    'example', 
-    'tc': False
+    'name': 'example', 
+    'tc': False,
 }
 ```
 
 ### Change password
 
-To change password access token is required and new password confirmation is required at changepassword endpoint
+To change password access token and new password confirmation is required at changepassword endpoint
 
 ```python
 def changepassword(self, password, password2, token, endpoint='changepassword'):
@@ -140,7 +139,7 @@ def sendpasswordresetemail(self, email, endpoint='sendpasswordresetemail'):
     self.print_details(response)
     return response.json()
 ```
-on success
+on success 
 ```python
 STATUS_CODE = 200
 {
@@ -150,7 +149,7 @@ STATUS_CODE = 200
 
 This mail gives uid and token for further use in reseting password.
 
-### reset password
+### Reset password
 To reset password first confirm new password and pass uid and token.
 
 
@@ -321,4 +320,25 @@ PASSWORD = 'testing456'
 # )
 
 # print(data)
+```
+
+
+### To run the application at local server
+#### First Migarte
+```python
+python manage.py makemigrations
+python manage.py migrate
+```
+
+#### Finally run server
+```python
+python manage.py runserver
+```
+
+### Requirement
+```python
+pip install Django
+pip install djangorestframework
+pip install djangorestframework-simplejwt
+pip install django-cors-headers
 ```

@@ -2,6 +2,7 @@
 
 ## Authentication API
 
+Endpoints of the user authentication API
 ```
 endpoints = {
     'login': 'login/',

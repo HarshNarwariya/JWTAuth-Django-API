@@ -13,6 +13,312 @@ endpoints = {
 ```
 
 ### Register
+
+To register user go to register endpoint and pass following params:
++ email
++ name
++ password
++ password2
+
+**code**
+```
+def register(self, email, name, password, password2, endpoint='register'):
+    payload = {
+        'email': email,
+        'name': name,
+        'password': password,
+        'password2': password2,
+    }
+    url = self.url(endpoint)
+    response = requests.post(url, data=payload)
+    self.print_details(response)
+    return response.json()
 ```
 
+On successfull login register endpoint returns access and refresh token for further use
+```python
+STATUS_CODE = 201
+{
+'refresh': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY0OTY5NzUxMCwiaWF0IjoxNjQ5NjExMTEwLCJqdGkiOiJmYTJmNGRlMWI5Yjg0ZDJiOTRiYzA2NzIxYWIwYzYyYyIsInVzZXJfaWQiOjEwfQ.HAHlGQZoVeqz1eip-Jl5Jz3Zvja0vMQnqFBSVCiy14Y', 
+'access': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQ5NjExNDEwLCJpYXQiOjE2NDk2MTExMTAsImp0aSI6ImVkYjdmZjk4ZWZjMTQwODhhZjZjOTJmYjJiY2FlNDk4IiwidXNlcl9pZCI6MTB9.3RoQtV_t694Jc1-RjAHwR0R3L2OujWLD4SJbQQq1xfE'
+}
+```
+
+
+### Login
+
+To register user go to register endpoint and pass following params:
++ email
++ password
+
+**code**
+```
+def login(self, email, password, endpoint='login'):
+    payload = {
+        'email': email,
+        'password': password,
+    }
+    url = self.url(endpoint)
+    response = requests.post(url, data=payload)
+    self.print_details(response)
+    return response.json()
+```
+On successfull login register endpoint returns access and refresh token for further use
+```python
+STATUS_CODE = 200
+{
+'refresh': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY0OTY5NzUxMCwiaWF0IjoxNjQ5NjExMTEwLCJqdGkiOiJmYTJmNGRlMWI5Yjg0ZDJiOTRiYzA2NzIxYWIwYzYyYyIsInVzZXJfaWQiOjEwfQ.HAHlGQZoVeqz1eip-Jl5Jz3Zvja0vMQnqFBSVCiy14Y', 
+'access': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQ5NjExNDEwLCJpYXQiOjE2NDk2MTExMTAsImp0aSI6ImVkYjdmZjk4ZWZjMTQwODhhZjZjOTJmYjJiY2FlNDk4IiwidXNlcl9pZCI6MTB9.3RoQtV_t694Jc1-RjAHwR0R3L2OujWLD4SJbQQq1xfE'
+}
+```
+
+### Profile
+
+To view profile (as it requires authentication), first generate access token via login or register endpoint, and pass it to profile endpoint which uses Bearer AUthentication.
+
+```python
+def profile(self, token, endpoint='profile'):
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/json",
+    }
+    url = self.url(endpoint)
+    response = requests.get(url, headers=headers)
+    self.print_details(response)
+    return response.json()
+```
+
+On success
+```python
+STATUS_CODE = 200
+{
+    'id': 10, 
+    'email': 'example@gmail.com', 
+    'name': 
+    'example', 
+    'tc': False
+}
+```
+
+### Change password
+
+To change password access token is required and new password confirmation is required at changepassword endpoint
+
+```python
+def changepassword(self, password, password2, token, endpoint='changepassword'):
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/json",
+    }
+    data = {
+        'password': password,
+        'password2': password2,
+    }
+    url = self.url(endpoint)
+    response = requests.post(url, headers=headers, data=data)
+    self.print_details(response)
+    return response.json()
+```
+On success
+```
+STATUS_CODE = 200
+{
+    'success': 'password changed successfully'
+}
+```
+
+### Send password reset email
+
+To reset password via mail, pass email to sendpasswordresetemail endpoint
+```python
+def sendpasswordresetemail(self, email, endpoint='sendpasswordresetemail'):
+    data = {
+        'email': email,
+    }
+    url = self.url(endpoint)
+    response = requests.post(url, data=data)
+    self.print_details(response)
+    return response.json()
+```
+on success
+```python
+STATUS_CODE = 200
+{
+    'success': 'password reset link sent successfully, please check your email.'
+}
+```
+
+This mail gives uid and token for further use in reseting password.
+
+### reset password
+To reset password first confirm new password and pass uid and token.
+
+
+```
+# Example
+uid = 'MTA'
+token = 'b3ot40-3e871b775cebc05c07b24e447a83f7d6'
+def resetpassword(self, password, password2, uid, token, endpoint='resetpassword'):
+    data = {
+        'password': password,
+        'password2': password2,
+    }
+    url = self.url(endpoint) + uid + '/' + token + '/'
+    print(url)
+    response = requests.post(url, data=data)
+    self.print_details(response)
+    return response.json()
+
+```
+On success password will be changed
+```
+STATUS_CODE = 200
+```
+
+# For Api reference consider the following python code
+
+```
+import requests
+
+class API:
+    def __init__(self, host='http://127.0.0.1:8000/api/'):
+        self.host = host
+        self.endpoints = {
+            'login': 'login/',
+            'register': 'register/',
+            'profile': 'profile/',
+            'changepassword': 'changepassword/',
+            'sendpasswordresetemail': 'sendpasswordresetemail/',
+            'resetpassword': 'resetpassword/',
+        }
+    
+    def url(self, endpoint):
+        return self.host + self.endpoints.get(endpoint, '')
+    
+    def print_details(self, response):
+        output = f'''
+        Url:         {response.url}
+        Status Code: {response.status_code}
+        '''            
+        print(output)
+    
+    def login(self, email, password, endpoint='login'):
+        payload = {
+            'email': email,
+            'password': password,
+        }
+        url = self.url(endpoint)
+        response = requests.post(url, data=payload)
+        self.print_details(response)
+        return response.json()
+
+    def register(self, email, name, password, password2, endpoint='register'):
+        payload = {
+            'email': email,
+            'name': name,
+            'password': password,
+            'password2': password2,
+        }
+        url = self.url(endpoint)
+        response = requests.post(url, data=payload)
+        self.print_details(response)
+        return response.json()
+
+    def profile(self, token, endpoint='profile'):
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/json",
+        }
+        url = self.url(endpoint)
+        response = requests.get(url, headers=headers)
+        self.print_details(response)
+        return response.json()
+
+    def changepassword(self, password, password2, token, endpoint='changepassword'):
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/json",
+        }
+        data = {
+            'password': password,
+            'password2': password2,
+        }
+        url = self.url(endpoint)
+        response = requests.post(url, headers=headers, data=data)
+        self.print_details(response)
+        return response.json()
+
+    def sendpasswordresetemail(self, email, endpoint='sendpasswordresetemail'):
+        data = {
+            'email': email,
+        }
+        url = self.url(endpoint)
+        response = requests.post(url, data=data)
+        self.print_details(response)
+        return response.json()
+
+    def resetpassword(self, password, password2, uid, token, endpoint='resetpassword'):
+        data = {
+            'password': password,
+            'password2': password2,
+        }
+        url = self.url(endpoint) + uid + '/' + token + '/'
+        print(url)
+        response = requests.post(url, data=data)
+        self.print_details(response)
+        return response.json()
+
+
+api = API()
+
+EMAIL = 'harshverma790932611@gmail.com'
+PASSWORD = 'testing456'
+
+# # Register User
+# data = api.register(
+#     email=EMAIL,
+#     name='example',
+#     password=PASSWORD,
+#     password2=PASSWORD,
+# )
+# print(data)
+
+# # Login and get access token
+# data = api.login(
+#     email=EMAIL,
+#     password=PASSWORD,
+# )
+# # print(data)
+# token = data['access']
+
+
+# # View Profile (TO GET THIS WORK RUN 'Login and get access token')
+# data = api.profile(token)
+# print(data)
+
+# # Change Password
+# PASSWORD = 'testing123'
+# data = api.changepassword(
+#     password=PASSWORD,
+#     password2=PASSWORD,
+#     token=token,
+# )
+# print(data)
+
+# # Send email to reset password
+# data = api.sendpasswordresetemail(
+#     email=EMAIL,
+# )
+# print(data)
+
+# # reset password
+# PASSWORD = 'testing456'
+# data = api.resetpassword(
+#     password=PASSWORD,
+#     password2=PASSWORD,
+#     uid="MQ",
+#     token="b3ookp-dc672fa7edf904c82d7a78ca99b35767",
+# )
+
+# print(data)
 ```

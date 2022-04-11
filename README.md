@@ -273,8 +273,8 @@ class API:
 
 api = API()
 
-EMAIL = 'harshverma790932611@gmail.com'
-PASSWORD = 'testing456'
+EMAIL = 'example@gmail.com'
+PASSWORD = 'testing321'
 
 # # Register User
 # data = api.register(

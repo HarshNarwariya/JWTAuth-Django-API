@@ -438,3 +438,20 @@ class UserPasswordResetView(APIView):
             'success': 'password reset successfully.',
         }, status=status.HTTP_200_OK)
 ```
+
+## Admin Views
+
+### Get all profiles (Only Admin have access)
+```python
+class UsersListView(ListAPIView):
+    queryset = User.objects.all()
+    permission_classes = [IsAdminUser]
+    pagination_class  = StandardResultsSetPagination
+    serializer_class = UserProfileSerializer
+```
+
+### Paginators
+```python
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 25
+```

@@ -7,7 +7,7 @@
 + https://harsh2.pythonanywhere.com/api/profile/
 + https://harsh2.pythonanywhere.com/api/changepassword/
 + https://harsh2.pythonanywhere.com/api/sendpasswordresetemail/
-+ https://harsh2.pythonanywhere.com/api/resetpassword/
++ https://harsh2.pythonanywhere.com/api/resetpassword/ (this url requires uid and token)
 + https://harsh2.pythonanywhere.com/api/getusers/
 
 or simple put host = "https://harsh2.pythonanywhere.com/api/" in front.py API class.

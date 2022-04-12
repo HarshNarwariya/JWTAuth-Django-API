@@ -87,6 +87,16 @@ class API:
         response = requests.post(url, data=data)
         self.print_details(response)
         return response.json()
+    
+    def getusers(self, token, page=1, endpoint='getusers'):
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/json",
+        }
+        url = self.url(endpoint) + f'?page={page}'
+        response = requests.get(url, headers=headers)
+        self.print_details(response)
+        return response.json()
 
 
 api = API()
@@ -139,5 +149,8 @@ PASSWORD = 'testing456'
 #     uid="MQ",
 #     token="b3ookp-dc672fa7edf904c82d7a78ca99b35767",
 # )
-
 # print(data)
+
+# # Get Users (admin only)
+    # data = api.getusers(token, page=2)
+    # print(data)

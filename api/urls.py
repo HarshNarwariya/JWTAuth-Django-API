@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from api.views import SendPasswordResetEmailView, UserChangePasswordView, UserPasswordResetView, UserProfileView, UserRegistrationView, UserLoginView
+from api.adminviews import UsersListView
 
 app_name = 'api'
 

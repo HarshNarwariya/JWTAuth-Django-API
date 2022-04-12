@@ -102,6 +102,19 @@ STATUS_CODE = 200
 }
 ```
 
+### Get all profiles (Only Admin have access)
+```python
+def getusers(self, token, page=1, endpoint='getusers'):
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/json",
+    }
+    url = self.url(endpoint) + f'?page={page}'
+    response = requests.get(url, headers=headers)
+    self.print_details(response)
+    return response.json()
+```
+
 ### Change password
 
 To change password access token and new password confirmation is required at changepassword endpoint

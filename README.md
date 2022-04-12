@@ -1,6 +1,9 @@
 ##### For application overview go to the link given below
 <a href="https://github.com/HarshNarwariya/JWTAuth-Django-API/blob/main/App%20Explanation.md" target="_blank">link</a>
 
+##### To work with API use https://harsh2.pythonanywhere.com/api/
+or simple put host = "https://harsh2.pythonanywhere.com/api/" in front.py API class.
+
 # Authentication API
 
 Endpoints of the user authentication API

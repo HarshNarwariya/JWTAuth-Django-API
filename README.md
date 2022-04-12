@@ -282,6 +282,16 @@ class API:
         response = requests.post(url, data=data)
         self.print_details(response)
         return response.json()
+        
+    def getusers(self, token, page=1, endpoint='getusers'):
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/json",
+        }
+        url = self.url(endpoint) + f'?page={page}'
+        response = requests.get(url, headers=headers)
+        self.print_details(response)
+        return response.json()
 
 
 api = API()

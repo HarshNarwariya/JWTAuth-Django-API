@@ -12,6 +12,10 @@
 
 or simple put host = "https://harsh2.pythonanywhere.com/api/" in front.py API class.
 
+#### Credentials for admin test user
+Email: **harsh@gmail.com**
+Password: **testing321**
+
 # Authentication API
 
 Endpoints of the user authentication API

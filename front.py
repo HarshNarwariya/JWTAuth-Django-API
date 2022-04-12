@@ -10,6 +10,7 @@ class API:
             'changepassword': 'changepassword/',
             'sendpasswordresetemail': 'sendpasswordresetemail/',
             'resetpassword': 'resetpassword/',
+            'getusers': 'getusers/'
         }
     
     def url(self, endpoint):
@@ -101,8 +102,8 @@ class API:
 
 api = API()
 
-EMAIL = 'harshverma790932611@gmail.com'
-PASSWORD = 'testing456'
+EMAIL = 'harsh@gmail.com'
+PASSWORD = 'testing321'
 
 # # Register User
 # data = api.register(
@@ -113,13 +114,13 @@ PASSWORD = 'testing456'
 # )
 # print(data)
 
-# # Login and get access token
-# data = api.login(
-#     email=EMAIL,
-#     password=PASSWORD,
-# )
-# # print(data)
-# token = data['access']
+# Login and get access token
+data = api.login(
+    email=EMAIL,
+    password=PASSWORD,
+)
+print(data)
+token = data.get('access')
 
 
 # # View Profile (TO GET THIS WORK RUN 'Login and get access token')
@@ -151,6 +152,6 @@ PASSWORD = 'testing456'
 # )
 # print(data)
 
-# # Get Users (admin only)
-# data = api.getusers(token, page=2)
-# print(data)
+# Get Users (admin only)
+data = api.getusers(token, page=1)
+print(data)

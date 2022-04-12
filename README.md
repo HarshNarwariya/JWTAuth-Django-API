@@ -12,6 +12,7 @@ endpoints = {
     'changepassword': 'changepassword/',
     'sendpasswordresetemail': 'sendpasswordresetemail/',
     'resetpassword': 'resetpassword/',
+    'getusers': 'getusers/'
 }
 ```
 

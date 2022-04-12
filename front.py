@@ -152,5 +152,5 @@ PASSWORD = 'testing456'
 # print(data)
 
 # # Get Users (admin only)
-    # data = api.getusers(token, page=2)
-    # print(data)
+# data = api.getusers(token, page=2)
+# print(data)
